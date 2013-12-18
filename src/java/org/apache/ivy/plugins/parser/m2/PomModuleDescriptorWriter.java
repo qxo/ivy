@@ -68,16 +68,20 @@ public final class PomModuleDescriptorWriter {
     public static void write(ModuleDescriptor md, File output, PomWriterOptions options)
             throws IOException {
         LineNumberReader in;
+        String fileEncoding = options.getFileEncoding();
+        if(fileEncoding == null){
+            fileEncoding = "UTF-8";
+        }
         if (options.getTemplate() == null) {
-            in = new LineNumberReader(new InputStreamReader(PomModuleDescriptorWriter.class.getResourceAsStream("pom.template")));
+            in = new LineNumberReader(new InputStreamReader(PomModuleDescriptorWriter.class.getResourceAsStream("pom.template"),fileEncoding));
         } else {
-            in = new LineNumberReader(new InputStreamReader(new FileInputStream(options.getTemplate())));
+            in = new LineNumberReader(new InputStreamReader(new FileInputStream(options.getTemplate()),fileEncoding));
         }
         
         if (output.getParentFile() != null) {
             output.getParentFile().mkdirs();
         }
-        PrintWriter out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(output), "UTF-8"));
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(output),fileEncoding));
         try {
             IvySettings settings = IvyContext.getContext().getSettings();
             IvyVariableContainer variables = new IvyVariableContainerWrapper(settings.getVariableContainer());

@@ -43,6 +43,17 @@ public class PomWriterOptions {
     
     private File template;
     
+  private String fileEncoding="UTF-8";
+    
+    public String getFileEncoding() {
+        return fileEncoding;
+    }
+
+    public PomWriterOptions setFileEncoding(String templateEncoding) {
+        this.fileEncoding = templateEncoding;
+        return this;
+    }
+    
     public File getTemplate() {
         return template;
     }

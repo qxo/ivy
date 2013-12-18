@@ -240,6 +240,16 @@ public class IvyMakePom extends IvyTask {
         }
     }
     
+    private String fileEncoding="UTF-8";
+    
+    public String getFileEncoding() {
+        return fileEncoding;
+    }
+
+    public void setFileEncoding(String templateEncoding) {
+        this.fileEncoding = templateEncoding;
+    }
+
     private PomWriterOptions getPomWriterOptions() throws IOException {
         PomWriterOptions options = new PomWriterOptions();
         options.setConfs(splitConfs(conf))
@@ -248,7 +258,7 @@ public class IvyMakePom extends IvyTask {
                .setPrintIvyInfo(isPrintIvyInfo())
                .setDescription(getDescription())
                .setExtraDependencies(getDependencies())
-               .setTemplate(getTemplateFile());
+               .setTemplate(getTemplateFile()).setFileEncoding(fileEncoding);
         
         if (!mappings.isEmpty()) {
             options.setMapping(new PomWriterOptions.ConfigurationScopeMapping(getMappingsMap()));
